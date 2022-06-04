@@ -15,7 +15,7 @@ A boilerplate code for starting out with a bot using the slash commands/buttons 
 
 ## Features
 
-* **/help command** - A robust help command that uses the commands predefined name, description and options to automatically create a paginated list of each command, navigable by the attached arrow buttons.
+* **/help command** - An advanced help command that uses the commands predefined name, description and options to automatically create a paginated list of each command, navigable by the attached arrow buttons.
 * **Bot status** - Automatically update the bots status each minute with the bot's total server count.
 * **Global/Local Scopes** - Set either global or local commands based on what suits your project. I may add a way to do both in future, depending on factors such as per server settings.
 * **Cache System** - A basic cache system for interactions, users and servers to store data without having to constantly query the database unless it is necessary.
