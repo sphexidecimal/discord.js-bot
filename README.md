@@ -1,8 +1,11 @@
 # Discord.js Bot
 
+![Twitter Follow](https://img.shields.io/twitter/follow/0xsphex?style=social)
+
 A boilerplate code for starting out with a bot using the slash commands/buttons and select menus
 
-Requires Node.js >= 16.0.0
+Requires Discord.js >= 13.0.0
+Requires Node.js as the matching Discord.js version requires
 
 ## Who is this for?
 
