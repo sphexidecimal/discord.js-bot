@@ -9,9 +9,6 @@
 
 A boilerplate code for starting out with a bot using the slash commands/buttons and select menus
 
-Requires Discord.js >= 13.0.0
-Requires Node.js as the matching Discord.js version requires
-
 ## Who is this for?
 
 * Anyone building a Discord bot and is still learning how slash commands are created/
