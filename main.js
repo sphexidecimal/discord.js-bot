@@ -43,15 +43,22 @@ async function main() {
         console.log('DJS bot online');
 
 
-        // update global commands
+        // update commands globally/locally
         const commands = [];
         client.commands.forEach(cmd => {
             const { name, description, options } = cmd;
             commands.push({ name, description, options: options || [] });
         })
-        if (commands[0]) {
-            // await client.application.commands.set(commands);
-            (await client.guilds.fetch('837167695279161364'))?.commands.set(commands);
+        if (commands[0]) { // pick one or both methods of setting commands (setting both will result in duplicates unless you account for that while building the commands array)
+            // set commands globally (may take some time to update in every server)
+            await client.application.commands.set(commands);
+
+            // individually set commands per server (updates much faster than global, but harder to keep track of)
+            for (const guild of client.guilds.cache) {
+                try {
+                    (await client.guilds.fetch(guild.id))?.commands.set(commands);
+                } catch (err) { console.error(err); }
+            }
         }
         
 
