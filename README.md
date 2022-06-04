@@ -4,14 +4,13 @@
 ![GitHub forks](https://img.shields.io/github/forks/sphexidecimal/discord.js-bot?style=social)
 ![node-current](https://img.shields.io/node/v/discord.js)
 ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/sphexidecimal/discord.js-bot/discord.js)
-![Discord](https://img.shields.io/discord/938434664576733194?color=5865F2&label=chat&logo=discord&logoColor=FFF)
 ![Twitter Follow](https://img.shields.io/twitter/follow/0xSpheX?style=social)
 
 A boilerplate code for starting out with a bot using the slash commands/buttons and select menus
 
 ## Who is this for?
 
-* Anyone building a Discord bot and is still learning how slash commands are created/
+* Anyone building a Discord bot and is still learning how slash commands are created or handled.
 * Anyone looking to simplify how interactions can be stored and used when needed.
 
 ## Features
