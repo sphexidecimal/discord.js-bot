@@ -17,9 +17,9 @@ Requires Node.js >= 16.0.0
 * **Cache System** - A basic cache system for interactions, users and servers to store data without having to constantly query the database unless it is necessary.
 * **Interaction Handler** - A simple, but robust method of handling slash commands/buttons and select menus using handlers and a registry for the interactions.
 
-### Interaction Registry
+### Interaction Registry (Button and Select Menu handler)
 
-#### Button and Select Menu handler
+#### In the command file itself
 
 * When defining a button or select menu's customId, specify the original interaction id and the related function in the handler you want to associate with the button
 
@@ -29,8 +29,6 @@ const button = new Discord.MessageButton()
 
 const menu = new Discord.MessageSelectMenu()
     .setCustomId(`${interaction.id}.onMenu`)
-    .setPlaceholder('...')
-    .addOptions(arrayOfOptions)
 ```
 
 * Setting the handlers into the interactions registry in order to access later as needed
@@ -42,14 +40,20 @@ const { interactions } = require('../registry.js');
 const handlers = {
     interaction,
     onButton: async function(componentInteraction) {
-        const value = componentInteraction.split('.')[1];
-        
         // do the thing
+
+        if (doneAbsolutelyEverythingYouNeedToDo) handlers.onEnd();
     },
     onMenu: async function(componentInteraction) {
-        const = componentInteraction.values; //select menus can have multiple values
+        const { values } = componentInteraction;
         
         // also do the thing
+
+        if (doneAbsolutelyEverythingYouNeedToDo) handlers.onEnd();
+    },
+    onEnd: function(componentInteraction) {
+        // only delete if you are 100% finished with the interaction
+        interactions.delete(handlers.interaction.id);
     }
 }
 
@@ -57,26 +61,31 @@ const handlers = {
 interactions.set(interaction.id, handlers);
 
 // initial edit when everything is setup
-try { await interaction.editReply({
-    content: 'text',
-    embeds: [embed],
-    components: [buttons, menus] })
+try {
+    await interaction.editReply({
+        content: 'text',
+        embeds: [embed],
+        components: [buttons, menus]
+    });
 } catch (err) { console.error(err); }
 
 // delete the interaction after x minutes
+// interactions last 15m max so do <15 or delete this altogether
 setTimeout(async function() {
     try {
-        interactions.delete(interaction.id) // can use this to stop buttons/menus being used wherever/whenever without having to ever edit the message
+        interactions.delete(interaction.id);
         
+        // empty components if you want to deter button presses on expired interactions
         await interaction.editReply({
             content: 'text',
             embeds: [embed],
-            components: [] // empty components if you want to deter button presses on expired interactions
-        })
+            components: []
+        });
     } catch (err) { console.error(err); }
-}, 1000 * 60 * 5); // replace 5 with how many minutes
-// interaction last 15m maximum, if you dont want a premature expiry (<15m) then delete this function entirely
+}, 1000 * 60 * x);
 ```
+
+#### Back in the main.js file, where you handle slash commands
 
 * Handling all buttons and select menus in a few lines
 
@@ -84,6 +93,12 @@ setTimeout(async function() {
 const { interactions } = require('./registry.js');
 
 client.on('interactionCreate', async (interaction) => {
+    // if the interaction is from a / command
+    if (interaction.isCommand()) {
+        // execute command file
+    }
+    
+    //if the interaction comes from a button/select menu
     if (interaction.customId) {
         // find the matching command using the id at the start of the button's customId
         const [interactionID, handlerFunction] = interaction.customId.split('.');
